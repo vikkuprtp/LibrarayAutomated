@@ -16,8 +16,8 @@ public class libraryBookService {
     @Autowired
     private libraryBooksRepository libraryBooksRepository;
 
-    public List<Map<?,?>>  addBooks(String author_name, String book_name, String genre){
-       return new ArrayList<>(libraryBooksRepository.saveAll(author_name,book_name,genre));
+    public void  addBooks(String author_name, String book_name, String genre){
+       libraryBooksRepository.saveAll(author_name,book_name,genre);
     }
 
 }

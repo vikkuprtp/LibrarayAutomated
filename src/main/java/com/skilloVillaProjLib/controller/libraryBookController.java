@@ -12,23 +12,25 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/home/users")
+@RequestMapping("api/home")
 public class libraryBookController {
 
     @Autowired
     private libraryBookService libraryBookServices;
 
-    @PostMapping("/{role_id}/addBooks")
-    public ResponseEntity<Object> addBooks(@RequestBody Map<?, ?> mp, Integer role_id) {
+    @PostMapping("/addBooks")
+    public ResponseEntity<Object> addBooks(@RequestBody Map<?, ?> mp,@RequestParam("role_Id") Integer role_Id) {
         try {
-            if (role_id == 1) {
+            if (role_Id == 1) {
                 String author_name = (String) mp.get("authorName");
                 String book_name = (String) mp.get("bookName");
                 String genre = (String) mp.get("genre");
                 libraryBookServices.addBooks(author_name,book_name,genre);
+                boolean bool = true;
+                return PostResponseHandler.generatePostResponse("Successful", HttpStatus.ACCEPTED, bool);
             }
-            boolean bool = true;
-            return PostResponseHandler.generatePostResponse("Successful", HttpStatus.ACCEPTED, bool);
+            boolean bool = false;
+            return PostResponseHandler.generatePostResponse("Not Authorized", HttpStatus.BAD_REQUEST, bool);
         }catch (Exception e) {
             boolean bool = false;
             return PostResponseHandler.generatePostResponse("Not Authorized", HttpStatus.BAD_REQUEST, bool);
