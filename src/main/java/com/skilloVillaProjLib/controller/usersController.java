@@ -45,12 +45,15 @@ public class usersController {
     public ResponseEntity<Object> returnBooks(@RequestBody Map<?,?> mp, @RequestParam("users_id") Integer users_id){
         try {
             int finePerDay = 50;
+            int finePerMinute=50;
             LocalDateTime localDateTime = LocalDateTime.now();
             LocalDateTime actualReturnDate = localDateTime;
             int library_books_id = (int) mp.get("libraryBooksId");
             int fine_paid = (int) mp.get("fine_paid");
             LocalDateTime due_date = userServices.getDueDate(library_books_id, users_id);
             System.out.println(due_date);
+
+            //Tried over 7 days of gap for usage
 //             if (actualReturnDate.getDayOfMonth()<=due_date.getDayOfMonth()) {
 //                userServices.returnRecord(actualReturnDate, due_date, library_books_id, fine_paid, users_id);
 //                boolean bool = true;
@@ -65,13 +68,16 @@ public class usersController {
 //             boolean bool=false;
 //             return PostResponseHandler.generatePostResponse("wonderful",HttpStatus.BAD_REQUEST,bool);}
 
+            //Checking the fine amount to be collected taking difference in minutes
+            //Both cases works
+
             if (due_date.isAfter(actualReturnDate)) {
                 userServices.returnRecord(actualReturnDate, due_date, library_books_id, fine_paid, users_id);
                 boolean bool = true;
                 return PostResponseHandler.genPostResponseForFinePaid("successful", HttpStatus.ACCEPTED, bool, due_date,actualReturnDate,fine_paid);
             }else if(due_date.isBefore(actualReturnDate)){
-                int noOfDay = actualReturnDate.getDayOfMonth()-due_date.getDayOfMonth();
-                fine_paid = noOfDay * finePerDay;
+                int noOfMinute = actualReturnDate.getMinute()-due_date.getMinute();
+                fine_paid = noOfMinute * finePerMinute;
                 userServices.returnRecord(actualReturnDate, due_date, library_books_id, fine_paid, users_id);
                 boolean bool = true;
                 return PostResponseHandler.genPostResponseForFinePaid("successful", HttpStatus.ACCEPTED, bool, due_date,actualReturnDate,fine_paid);
