@@ -17,9 +17,6 @@ public class Users {
     private int roleId=2;
     private String phoneNumber;
     private String  address;
-    @ManyToOne
-    borrowRecord borrowRecords;
-    @ManyToOne
-    returnRecord returnRecords;
+
 
 }

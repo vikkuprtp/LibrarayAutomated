@@ -17,12 +17,14 @@ public class usersService {
     private usersRepository userRepository;
 
     public void borrowBooks(LocalDateTime borrow_date,LocalDateTime due_date,int library_books_id,int users_id){
-            userRepository.addIntoBorrowRecord(borrow_date,due_date,library_books_id,users_id);
+             userRepository.addIntoBorrowRecord(borrow_date,due_date,library_books_id,users_id);
 
     }
-    public int getLimitCount(int users_id){
-        return userRepository.countUsersById(users_id);
+    public int countbyborrowBooks(int users_id){
+        return userRepository.countUsersByBorrowRecords(users_id);
+
     }
+
 
     public LocalDateTime getDueDate(int library_books_id,int users_id){
         return userRepository.due_date(library_books_id,users_id);

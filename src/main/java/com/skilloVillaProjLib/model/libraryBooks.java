@@ -17,6 +17,10 @@ public class libraryBooks {
     private String authorName;
     private String genre;
 
+    @ManyToOne
+    @JoinColumn
+    private  libraryBooks libraryBooks;
+
 
 
 }

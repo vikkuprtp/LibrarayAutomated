@@ -20,12 +20,11 @@ public class usersController {
         try {
             LocalDateTime localDateTime = LocalDateTime.now();
             LocalDateTime borrow_date = localDateTime;
-//            LocalDateTime due_date = localDateTime.plusDays(7);
+  //          LocalDateTime due_date = localDateTime.plusDays(7);
             LocalDateTime due_date=localDateTime.plusMinutes(1);
             int library_books_id = (int) mp.get("libraryBooksId");
-            int count = userServices.getLimitCount(users_id);
-            System.out.println(count);
-            if (count < 6) {
+            int count=userServices.countbyborrowBooks(users_id);
+            if (count <= 5) {
                 userServices.borrowBooks(borrow_date, due_date, library_books_id, users_id);
                 boolean bool = true;
                 return PostResponseHandler.genPostResponse("successful", HttpStatus.ACCEPTED, bool, due_date);

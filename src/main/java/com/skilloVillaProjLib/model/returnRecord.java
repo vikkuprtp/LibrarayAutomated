@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -22,6 +23,10 @@ public class returnRecord {
     @ManyToOne
     @JoinColumn
     private  libraryBooks libraryBooks;
+
+    @ManyToOne
+    @JoinColumn
+    private  Users users;
 
 
 

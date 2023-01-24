@@ -24,6 +24,10 @@ public class borrowRecord {
     @JoinColumn
     private  libraryBooks libraryBooks;
 
+    @ManyToOne
+    @JoinColumn
+    private  Users users;
+
 
 
 
